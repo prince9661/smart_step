@@ -30,10 +30,10 @@ session_start();
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Smart Step</h1>
             <ul class="flex space-x-6">
-                <li><a href="index.php" class="hover:underline">Home</a></li>
-                <li><a href="order.php" class="hover:underline">Order Shoes</a></li>
-                <li><a href="track.php" class="hover:underline">Track Order</a></li>
-                <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
+                <!-- <li><a href="index.php" class="hover:underline">Home</a></li> -->
+                <li><a href="products.php" class="hover:underline">Order Shoes</a></li>
+                <!-- <li><a href="track.php" class="hover:underline">Track Order</a></li> -->
+                <li><a href="Cart.php" class="hover:underline">Cart</a></li>
                 <li><a href="contact.php" class="hover:underline">Contact Us</a></li>
                 <li>
                     <?php

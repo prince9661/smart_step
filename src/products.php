@@ -5,7 +5,7 @@ $conn = new mysqli("localhost", "root", "", "smart_step_db");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-if($_SESSION['role']=='Manager'){
+if ($_SESSION['role'] == 'Manager') {
     echo "<script>alert('You are not allowed to access this page!'); window.location='admin.php';</script>";
     exit();
 }
@@ -22,25 +22,50 @@ $result = $conn->query($sql);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-600 p-4 text-white flex justify-between">
+    <header class="bg-blue-600 p-4 text-white flex justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step - Products</h1>
-        <a href="cart.php" class=" text-white">View Cart</a>
+        <a href="index.php" class="text-white hover:underline">Home</a>
+        <a href="cart.php" class="text-white hover:underline">View Cart</a>
+        <a href="cart.php" class="text-white hover:underline">View Cart</a>
+        <a href="cart.php" class="text-white hover:underline">View Cart</a>
     </header>
 
     <div class="container mx-auto mt-10">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <?php while ($row = $result->fetch_assoc()): ?>
             <div class="bg-white p-4 rounded-lg shadow-md">
-                <img src="<?= $row['image']; ?>" alt="<?= $row['name']; ?>" class="w-full  object-cover">
-                <h2 class="text-xl font-bold mt-2"><?= $row['name']; ?></h2>
+                <img src="<?= $row['image']; ?>" alt="<?= $row['name']; ?>" class="w-full h-72 object-cover rounded-md">
+                <h2 class="text-xl font-bold mt-3"><?= $row['name']; ?></h2>
                 <p class="text-gray-500"><?= $row['description']; ?></p>
-                <p class="text-gray-800 font-semibold">Price: $<?= $row['discount_price']; ?> 
+                
+                <!-- Pricing -->
+                <p class="text-lg font-semibold text-green-600 mt-2">
+                    $<?= $row['discount_price']; ?>
                     <span class="text-sm text-gray-500 line-through">$<?= $row['price']; ?></span>
                 </p>
-                <form action="add_to_cart.php" method="POST">
+
+                <!-- Rating and Reviews -->
+                <div class="flex items-center mt-2 text-yellow-500">
+                    <?php for ($i = 0; $i < 5; $i++): ?>
+                        <?php if ($i < $row['rating']): ?>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.561-.954L10 0l2.949 5.956 6.561.954-4.755 4.635 1.123 6.545z"/></svg>
+                        <?php else: ?>
+                            <svg class="w-5 h-5 text-gray-300" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.561-.954L10 0l2.949 5.956 6.561.954-4.755 4.635 1.123 6.545z"/></svg>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                    <span class="ml-2 text-sm text-gray-600">(<?= $row['reviews']; ?> reviews)</span>
+                </div>
+
+                <!-- Quantity and Size -->
+                <p class="text-sm mt-2 text-gray-700">Available: <?= $row['quantity']; ?> pcs</p>
+                <p class="text-sm text-gray-700">Size: <?= $row['size']; ?></p>
+
+                <!-- Add to Cart Form -->
+                <form action="add_to_cart.php" method="POST" class="mt-3">
                     <input type="hidden" name="product_id" value="<?= $row['id']; ?>">
-                    <input type="number" name="quantity" value="1" min="1" class="border p-1 w-16">
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-lg hover:bg-blue-700">Add to Cart</button>
+                    <label class="block text-sm text-gray-600 mb-1">Quantity:</label>
+                    <input type="number" name="quantity" value="1" min="1" max="<?= $row['quantity']; ?>" class="border p-1 w-20 rounded-md">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-lg hover:bg-blue-700 block">Add to Cart</button>
                 </form>
             </div>
             <?php endwhile; ?>

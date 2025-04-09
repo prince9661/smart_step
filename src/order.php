@@ -1,81 +1,97 @@
 <?php
-session_start();
 $conn = new mysqli("localhost", "root", "", "smart_step_db");
 
 if ($conn->connect_error) {
-    die("Database Connection Failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
-$conn->set_charset("utf8");
 
-$success_message = "";
+// Join products and orders table to get all details
+$sql = "SELECT orders.*, products.name AS product_name, products.size 
+        FROM orders 
+        JOIN products ON orders.product_id = products.id 
+        ORDER BY orders.created_at DESC";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $shoe_type = $_POST['shoe_type'];
-    $size = $_POST['size'];
-    $color = $_POST['color'];
-    $quantity = intval($_POST['quantity']);
-    
-    // Dummy price calculation logic
-    $prices = ["Sneakers" => 50, "Boots" => 70, "Sandals" => 40, "Formal Shoes" => 80];
-    $total_price = $prices[$shoe_type] * $quantity;
-    
-    // Insert order into database
-    $stmt = $conn->prepare("INSERT INTO orders (shoe_type, size, color, quantity, total_price, status, estimated_delivery) VALUES (?, ?, ?, ?, ?, 'Pending', DATE_ADD(NOW(), INTERVAL 7 DAY))");
-    $stmt->bind_param("sssis", $shoe_type, $size, $color, $quantity, $total_price);
-    
-    if ($stmt->execute()) {
-        $order_id = $stmt->insert_id;
-        $success_message = "Order placed successfully! Track your order <a href='track_order.php'>here</a>.";
-    } else {
-        $success_message = "Error placing order. Please try again.";
-    }
-    $stmt->close();
-}
+$result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Orders - Admin Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Shoes - Smart Step</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-600 p-4 text-white flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Smart Step</h1>
-        <nav>
-            <a href="index.php" class="px-4 hover:underline">Home</a>
-            <a href="track_order.php" class="px-4 hover:underline">Track Order</a>
-            <a href="inventory.php" class="px-4 hover:underline">Inventory</a>
-            <a href="contact.php" class="px-4 hover:underline">Contact Us</a>
-            <a href="login.php" class="px-4 hover:underline">Login/Register</a>
-        </nav>
-    </header>
-    <main class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-bold text-center">Place Your Custom Shoe Order</h2>
-        <p class="text-center text-gray-600">Customize your perfect pair with Smart Step’s advanced production system.</p>
-        <form method="POST" class="mt-4 flex flex-col gap-4">
-            <label>Shoe Type:</label>
-            <select name="shoe_type" class="border p-2 rounded w-full" required>
-                <option value="Sneakers">Sneakers</option>
-                <option value="Boots">Boots</option>
-                <option value="Sandals">Sandals</option>
-                <option value="Formal Shoes">Formal Shoes</option>
-            </select>
-            <label>Size:</label>
-            <input type="text" name="size" placeholder="Enter Size (EU/US/UK)" class="border p-2 rounded w-full" required>
-            <label>Color:</label>
-            <input type="color" name="color" class="border p-2 rounded w-full">
-            <label>Quantity:</label>
-            <input type="number" name="quantity" min="1" value="1" class="border p-2 rounded w-full" required>
-            <button type="submit" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Confirm Order</button>
-        </form>
-        <?php if ($success_message) { ?>
-            <p class="text-green-500 mt-2 text-center"><?= $success_message; ?></p>
-        <?php } ?>
-    </main>
-    <footer class="bg-gray-800 text-white text-center p-4 mt-10">
-        <p>Contact support: support@smartstep.com | <a href="#" class="underline">FAQ</a> | <a href="#" class="underline">Refund Policy</a></p>
-    </footer>
+
+<!-- Navbar -->
+<nav class="bg-blue-600 p-4 text-white">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Smart Step - Orders</h1>
+        <ul class="flex space-x-6">
+            <li><a href="admin-dashboard.php" class="hover:underline">Dashboard</a></li>
+            <li><a href="orders.php" class="hover:underline">Orders</a></li>
+            <li><a href="logout.php" class="hover:underline">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Orders Table -->
+<section class="container mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4">All Orders</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full border text-sm">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="p-3 border">Order ID</th>
+                    <th class="p-3 border">Customer Name</th>
+                    <th class="p-3 border">Product</th>
+                    <th class="p-3 border">Size</th>
+                    <th class="p-3 border">Quantity</th>
+                    <th class="p-3 border">Total Price</th>
+                    <th class="p-3 border">Status</th>
+                    <th class="p-3 border">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($result && $result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr class="text-center border-t">
+                            <td class="p-2"><?= $row['id'] ?></td>
+                            <td class="p-2"><?= htmlspecialchars($row['customer_name']) ?></td>
+                            <td class="p-2"><?= htmlspecialchars($row['product_name']) ?></td>
+                            <td class="p-2"><?= htmlspecialchars($row['size']) ?></td>
+                            <td class="p-2"><?= $row['quantity'] ?></td>
+                            <td class="p-2">₹<?= number_format($row['total_price'], 2) ?></td>
+                            <td class="p-2">
+                                <?php
+                                $status = $row['status'];
+                                $color = match ($status) {
+                                    'Pending' => 'bg-yellow-200 text-yellow-800',
+                                    'Completed' => 'bg-green-200 text-green-800',
+                                    'Cancelled' => 'bg-red-200 text-red-800',
+                                    default => 'bg-gray-200 text-gray-800',
+                                };
+                                ?>
+                                <span class="px-3 py-1 rounded-full <?= $color ?>"><?= $status ?></span>
+                            </td>
+                            <td class="p-2"><?= date("d M Y", strtotime($row['created_at'])) ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="8" class="text-center p-4 text-gray-600">No orders found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white text-center py-4 mt-10">
+    &copy; 2025 Smart Step. All rights reserved.
+</footer>
+
 </body>
 </html>
