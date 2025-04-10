@@ -26,10 +26,32 @@ $result = $conn->query("SELECT cart.*, products.quantity AS stock FROM cart
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-600 p-4 text-white flex justify-between">
-        <h1 class="text-2xl font-bold">Smart Step - Your Cart</h1>
-        <a href="products.php" class="text-white underline">Continue Shopping</a>
-    </header>
+<header class="bg-blue-600 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Smart Step - Products</h1>
+            <nav class="bg-blue-600 p-4 text-white">
+                <div class="container mx-auto flex justify-between items-center">
+                    <ul class="flex space-x-6 items-center">
+                        <li><a href="index.php" class="hover:underline">Home</a></li>
+                        <li><a href="products.php" class="hover:underline">Products</a></li>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Customer'): ?>
+                            <li><a href="my_orders.php" class="hover:underline">My Orders</a></li>
+                        <?php endif; ?>
+                        <li>
+                            <?php
+                            if (isset($_SESSION["user_id"])) {
+                                echo "<a href='logout.php' class='hover:underline'>Logout</a>";
+                            } else {
+                                echo "<a href='login.php' class='hover:underline'>Login</a>";
+                            }
+                            ?>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+</header>
 
     <div class="container mx-auto mt-10 px-4">
         <h2 class="text-3xl font-bold mb-6">Your Cart</h2>

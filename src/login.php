@@ -56,6 +56,9 @@ if (isset($_POST['login'])) {
             <input type="password" name="password" placeholder="Password" required class="border p-2 w-full mt-3">
             <button type="submit" name="login" class="bg-blue-500 text-white w-full p-2 rounded mt-4">Login</button>
         </form>
+        <p class="mt-2 text-right">
+            <a href="forgot_password.php" class="text-blue-500 text-sm hover:underline">Forgot Password?<a>
+        </p>
         <p class="mt-4 text-center">
             Don't have an account? <a href="signup.php" class="text-blue-500">Sign Up</a>
         </p>

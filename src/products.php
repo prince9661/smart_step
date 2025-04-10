@@ -22,13 +22,33 @@ $result = $conn->query($sql);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-600 p-4 text-white flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Smart Step - Products</h1>
-        <a href="index.php" class="text-white hover:underline">Home</a>
-        <a href="cart.php" class="text-white hover:underline">View Cart</a>
-        <a href="cart.php" class="text-white hover:underline">View Cart</a>
-        <a href="cart.php" class="text-white hover:underline">View Cart</a>
+    <header class="bg-blue-600 p-2 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Smart Step - Products</h1>
+            <nav class="bg-blue-600 p-4 text-white">
+                <div class="container mx-auto flex justify-between items-center">
+                    <ul class="flex space-x-6 items-center">
+                        <li><a href="index.php" class="hover:underline">Home</a></li>
+                        <li><a href="cart.php" class="hover:underline">View Cart</a></li>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Customer'): ?>
+                            <li><a href="my_orders.php" class="hover:underline">My Orders</a></li>
+                        <?php endif; ?>
+                        <li>
+                            <?php
+                            if (isset($_SESSION["user_id"])) {
+                                echo "<a href='logout.php' class='hover:underline'>Logout</a>";
+                            } else {
+                                echo "<a href='login.php' class='hover:underline'>Login</a>";
+                            }
+                            ?>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
     </header>
+
 
     <div class="container mx-auto mt-10">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

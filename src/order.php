@@ -5,10 +5,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Join products and orders table to get all details
-$sql = "SELECT orders.*, products.name AS product_name, products.size 
+
+$sql = "SELECT orders.*, products.name AS product_name, products.size, users.full_name 
         FROM orders 
         JOIN products ON orders.product_id = products.id 
+        JOIN users ON orders.user_id = users.id 
         ORDER BY orders.created_at DESC";
 
 $result = $conn->query($sql);
@@ -29,8 +30,12 @@ $result = $conn->query($sql);
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step - Orders</h1>
         <ul class="flex space-x-6">
-            <li><a href="admin-dashboard.php" class="hover:underline">Dashboard</a></li>
-            <li><a href="orders.php" class="hover:underline">Orders</a></li>
+            <li><a href="admin.php" class="hover:underline">Dashboard</a></li>
+            <li><a href="index.php" class="hover:underline">Home</a></li>
+            <li><a href="order.php" class="hover:underline">Order</a></li>
+            <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
+            <li><a href="upload_product.php" class="hover:underline">Upload_Shoes</a></li>
+            <li><a href="update_quantity.php" class="hover:underline">Update_Shoes</a></li>
             <li><a href="logout.php" class="hover:underline">Logout</a></li>
         </ul>
     </div>
@@ -58,7 +63,7 @@ $result = $conn->query($sql);
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr class="text-center border-t">
                             <td class="p-2"><?= $row['id'] ?></td>
-                            <td class="p-2"><?= htmlspecialchars($row['customer_name']) ?></td>
+                            <td class="p-2"><?= htmlspecialchars($row['full_name']) ?></td>
                             <td class="p-2"><?= htmlspecialchars($row['product_name']) ?></td>
                             <td class="p-2"><?= htmlspecialchars($row['size']) ?></td>
                             <td class="p-2"><?= $row['quantity'] ?></td>

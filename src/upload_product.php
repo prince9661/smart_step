@@ -73,8 +73,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title><?= $edit ? 'Update' : 'Upload' ?> Product - Smart Step</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <nav class="bg-blue-600 p-4 text-white w-full">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center">
+            <h1 class="text-2xl font-bold">Smart Step - Admin Dashboard</h1>
+            <ul class="flex flex-wrap gap-4 mt-2 sm:mt-0">
+                <li><a href="admin.php" class="hover:underline">Dashboard</a></li>
+                <li><a href="index.php" class="hover:underline">Home</a></li>
+                <li><a href="order.php" class="hover:underline">Order</a></li>
+                <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
+                <li><a href="upload_product.php" class="hover:underline">Upload_Shoes</a></li>
+                <li><a href="update_quantity.php" class="hover:underline">Update_Shoes</a></li>
+                <li><a href="logout.php" class="hover:underline">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mt-10">
+
         <h1 class="text-2xl font-bold mb-6"><?= $edit ? 'Update' : 'Upload' ?> Product</h1>
         <form action="" method="POST" enctype="multipart/form-data" class="space-y-4">
             <?php if ($edit): ?>
@@ -82,8 +97,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
             <input type="text" name="name" placeholder="Product Name" value="<?= $product['name']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
             <input type="text" name="description" placeholder="Description" value="<?= $product['description']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
-            <input type="number" step="0.01" name="price" placeholder="Price" value="<?= $product['price']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
-            <input type="number" step="0.01" name="discount_price" placeholder="Discount Price" value="<?= $product['discount_price']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
+            <input type="number" step="0.01" name="price" placeholder="Price (MRP)" value="<?= $product['price']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
+            <input type="number" step="0.01" name="discount_price" placeholder="price after discount" value="<?= $product['discount_price']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
             <input type="number" name="rating" min="1" max="5" placeholder="Rating (1-5)" value="<?= $product['rating']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
             <input type="number" name="reviews" placeholder="Number of Reviews" value="<?= $product['reviews']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />
             <input type="number" name="quantity" placeholder="Stock Quantity" value="<?= $product['quantity']; ?>" class="w-full p-2 border border-gray-300 rounded-lg" required />

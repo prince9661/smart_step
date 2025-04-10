@@ -63,10 +63,12 @@ $conn->close();
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Smart Step - Manage Inventory</h1>
             <ul class="flex space-x-6">
-                <li><a href="admin-dashboard.php" class="hover:underline">Dashboard</a></li>
-                <li><a href="manage-orders.php" class="hover:underline">Orders</a></li>
-                <li><a href="production.php" class="hover:underline">Production Schedule</a></li>
-                <li><a href="reports.php" class="hover:underline">Reports</a></li>
+                <li><a href="admin.php" class="hover:underline">Dashboard</a></li>
+                <li><a href="index.php" class="hover:underline">Home</a></li>
+                <li><a href="order.php" class="hover:underline">Order</a></li>
+                <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
+                <li><a href="upload_product.php" class="hover:underline">Upload_Shoes</a></li>
+                <li><a href="update_quantity.php" class="hover:underline">Update_Shoes</a></li>
                 <li><a href="logout.php" class="hover:underline">Logout</a></li>
             </ul>
         </div>
