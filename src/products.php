@@ -54,7 +54,7 @@ $result = $conn->query($sql);
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <?php while ($row = $result->fetch_assoc()): ?>
             <div class="bg-white p-4 rounded-lg shadow-md">
-                <img src="<?= $row['image']; ?>" alt="<?= $row['name']; ?>" class="w-full h-72 object-cover rounded-md">
+                <img src="<?= $row['image']; ?>" alt="<?= $row['name']; ?>" class=" h-72 w-full  rounded-md">
                 <h2 class="text-xl font-bold mt-3"><?= $row['name']; ?></h2>
                 <p class="text-gray-500"><?= $row['description']; ?></p>
                 
@@ -79,12 +79,14 @@ $result = $conn->query($sql);
                 <!-- Quantity and Size -->
                 <p class="text-sm mt-2 text-gray-700">Available: <?= $row['quantity']; ?> pcs</p>
                 <p class="text-sm text-gray-700">Size: <?= $row['size']; ?></p>
+                
 
                 <!-- Add to Cart Form -->
                 <form action="add_to_cart.php" method="POST" class="mt-3">
                     <input type="hidden" name="product_id" value="<?= $row['id']; ?>">
                     <label class="block text-sm text-gray-600 mb-1">Quantity:</label>
                     <input type="number" name="quantity" value="1" min="1" max="<?= $row['quantity']; ?>" class="border p-1 w-20 rounded-md">
+                    <a href="product_detail.php?id=<?= $row['id'] ?>" class="inline-block mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">View</a>
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 mt-2 rounded-lg hover:bg-blue-700 block">Add to Cart</button>
                 </form>
             </div>
