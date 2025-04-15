@@ -61,7 +61,7 @@ if (!$product) {
     <div class="bg-white p-6 rounded-lg shadow-md grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Product Image -->
         <div>
-            <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>" class="w-full h-96 object-cover rounded-lg">
+            <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>" class="w-full h-96  rounded-lg">
         </div>
 
         <!-- Product Info -->

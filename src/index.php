@@ -75,7 +75,7 @@ $products = $conn->query("SELECT * FROM products LIMIT 8");
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <?php while ($row = $products->fetch_assoc()): ?>
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-xl transition">
-                <img src="<?= $row['image'] ?>" alt="<?= $row['name'] ?>" class="w-full h-48 object-cover rounded">
+                <img src="<?= $row['image'] ?>" alt="<?= $row['name'] ?>" class="w-full h-48  rounded">
                 <h3 class="text-lg font-semibold mt-3"><?= $row['name'] ?></h3>
                 <p class="text-blue-600 font-bold mt-1">$<?= number_format($row['price'], 2) ?></p>
                 <a href="product_detail.php?id=<?= $row['id'] ?>" class="inline-block mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">View</a>
