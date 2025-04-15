@@ -17,7 +17,7 @@ $products = $conn->query("SELECT * FROM products LIMIT 8");
     <script src="https://cdn.tailwindcss.com"></script>
      
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-slate-400 text-gray-800">
 
 <!-- Navbar -->
 <header class="bg-blue-600 p-4 text-white shadow">
