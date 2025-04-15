@@ -15,6 +15,7 @@ $lowStockItems = $conn->query("SELECT COUNT(*) AS count FROM products WHERE quan
 $products = $conn->query("SELECT * FROM products");
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
