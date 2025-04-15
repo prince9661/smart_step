@@ -55,22 +55,23 @@ $products = $conn->query("SELECT * FROM products");
 <!-- Dashboard Metrics -->
 <section class="container mx-auto mt-10">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="bg-blue-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold"><?= $totalOrders ?></h3>
-            <p>Total Orders</p>
-        </div>
-        <div class="bg-yellow-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold"><?= $pendingOrders ?></h3>
-            <p>Pending Orders</p>
-        </div>
-        <div class="bg-green-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold"><?= $completedOrders ?></h3>
-            <p>Completed Orders</p>
-        </div>
-        <div class="bg-red-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold"><?= $lowStockItems ?></h3>
-            <p>Low Stock Alerts</p>
-        </div>
+    <div class="bg-blue-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="totalOrders">0</h3>
+    <p>Total Orders</p>
+</div>
+<div class="bg-yellow-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="pendingOrders">0</h3>
+    <p>Pending Orders</p>
+</div>
+<div class="bg-green-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="completedOrders">0</h3>
+    <p>Completed Orders</p>
+</div>
+<div class="bg-red-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="lowStockItems">0</h3>
+    <p>Low Stock Alerts</p>
+</div>
+
     </div>
 </section>
 
@@ -162,6 +163,33 @@ $products = $conn->query("SELECT * FROM products");
 <footer class="bg-gray-800 text-white text-center py-4 mt-10">
     &copy; 2025 Smart Step. All rights reserved.
 </footer>
+<script>
+function animateValue(id, start, end, duration) {
+    let obj = document.getElementById(id);
+    let range = end - start;
+    let stepTime = Math.abs(Math.floor(duration / range));
+    let startTime = new Date().getTime();
+    let endTime = startTime + duration;
+    let timer;
+
+    function run() {
+        let now = new Date().getTime();
+        let remaining = Math.max((endTime - now) / duration, 0);
+        let value = Math.round(end - (remaining * range));
+        obj.innerText = value;
+        if (value === end) clearInterval(timer);
+    }
+
+    timer = setInterval(run, stepTime);
+    run();
+}
+
+// Use PHP to pass the values into JS
+animateValue("totalOrders", 0, <?= $totalOrders ?>, 1000);
+animateValue("pendingOrders", 0, <?= $pendingOrders ?>, 1000);
+animateValue("completedOrders", 0, <?= $completedOrders ?>, 1000);
+animateValue("lowStockItems", 0, <?= $lowStockItems ?>, 1000);
+</script>
 
 </body>
 </html>
