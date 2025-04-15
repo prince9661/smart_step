@@ -5,16 +5,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch metrics
 $totalOrders = $conn->query("SELECT COUNT(*) AS count FROM orders")->fetch_assoc()['count'];
 $pendingOrders = $conn->query("SELECT COUNT(*) AS count FROM orders WHERE status='Pending'")->fetch_assoc()['count'];
 $completedOrders = $conn->query("SELECT COUNT(*) AS count FROM orders WHERE status='Completed'")->fetch_assoc()['count'];
 $lowStockItems = $conn->query("SELECT COUNT(*) AS count FROM products WHERE quantity < 20")->fetch_assoc()['count'];
 
-// Fetch all products
 $products = $conn->query("SELECT * FROM products");
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +19,19 @@ $products = $conn->query("SELECT * FROM products");
     <meta charset="UTF-8">
     <title>Admin Dashboard - Smart Step</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Custom font override -->
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
 
@@ -105,6 +114,7 @@ $products = $conn->query("SELECT * FROM products");
         </tbody>
     </table>
 </section>
+
 <!-- Pending Orders Management -->
 <section class="container mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-xl font-bold mb-4">Pending Orders</h2>
