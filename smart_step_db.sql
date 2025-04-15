@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2025 at 06:27 AM
+-- Generation Time: Apr 15, 2025 at 10:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,9 +44,6 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `product_id`, `name`, `description`, `price`, `discount_price`, `quantity`, `image`, `user_id`) VALUES
-(4, 3, 'Puma RS-X', 'Casual sneakers with a retro style', 89.99, 109.99, 2, 'puma.jpg', 2),
-(7, 4, 'airjorden', 'good shoes', 5000.00, 100.00, 2, 'uploads/sh.jpg', 2),
-(8, 5, 'Redtap ', 'he', 100.00, 200.00, 1, 'uploads/red.png', 2),
 (9, 4, 'airjorden', 'good shoes', 5000.00, 100.00, 1, 'uploads/sh.jpg', 1);
 
 -- --------------------------------------------------------
@@ -69,7 +66,7 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `material_name`, `current_stock`, `required_stock`, `unit_type`, `min_required_stock`) VALUES
-(3, 'Laces', 200, 150, 'Meter(Sq)', 100),
+(3, 'Laces', 100, 150, 'Meter(Sq)', 100),
 (8, 'Leather', 400, 0, 'meters', 100),
 (9, 'pPlastic', 200, 0, 'Kg', 150),
 (10, 'Sole', 400, 0, 'pices', 300);
@@ -96,12 +93,28 @@ CREATE TABLE `inventory_usage` (
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
-  `customer_name` varchar(255) NOT NULL,
-  `shoe_type` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `size` varchar(10) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `status` enum('Pending','In Production','Completed','Delivered') NOT NULL DEFAULT 'Pending',
-  `order_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `total_price` decimal(10,2) NOT NULL,
+  `status` enum('Pending','Completed','Cancelled') DEFAULT 'Pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `product_id`, `size`, `quantity`, `total_price`, `status`, `created_at`) VALUES
+(1, 2, 1, NULL, 1, 149.99, 'Completed', '2025-04-08 06:35:41'),
+(2, 2, 2, NULL, 1, 179.99, 'Pending', '2025-04-08 06:36:29'),
+(3, 2, 2, NULL, 1, 179.99, 'Completed', '2025-04-08 06:39:56'),
+(4, 2, 4, NULL, 3, 300.00, 'Pending', '2025-04-10 02:14:51'),
+(5, 5, 4, NULL, 1, 100.00, 'Completed', '2025-04-10 02:34:19'),
+(6, 6, 6, NULL, 1, 10.00, 'Completed', '2025-04-10 02:40:16'),
+(7, 2, 4, NULL, 1, 100.00, 'Pending', '2025-04-10 09:40:13'),
+(8, 2, 4, NULL, 1, 100.00, 'Completed', '2025-04-11 00:35:16');
 
 -- --------------------------------------------------------
 
@@ -160,19 +173,24 @@ CREATE TABLE `products` (
   `rating` int(11) NOT NULL DEFAULT 5,
   `reviews` int(11) NOT NULL DEFAULT 0,
   `image` varchar(255) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 50
+  `quantity` int(11) NOT NULL DEFAULT 50,
+  `size` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `price`, `discount_price`, `rating`, `reviews`, `image`, `quantity`) VALUES
-(1, 'Nike Air Zoom Pegasus 39', 'Men\'s Road Running Shoes', 129.99, 149.99, 5, 1280, 'sh.jpg', 73),
-(2, 'Adidas Ultraboost', 'High-performance running shoes', 159.99, 179.99, 5, 1050, 'adidas.jpg', 96),
-(3, 'Puma RS-X', 'Casual sneakers with a retro style', 89.99, 109.99, 4, 750, 'puma.jpg', 71),
-(4, 'airjorden', 'good shoes', 5000.00, 100.00, 4, 12, 'uploads/sh.jpg', 47),
-(5, 'Redtap ', 'he', 100.00, 200.00, 4, 45, 'uploads/red.png', 49);
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `discount_price`, `rating`, `reviews`, `image`, `quantity`, `size`) VALUES
+(1, 'Nike Air Zoom Pegasus 39', 'Men\'s Road Running Shoes', 129.99, 149.99, 5, 1280, 'uploads/s4.jpg', 67, 7),
+(2, 'Adidas Ultraboost', 'High-performance running shoes', 159.99, 179.99, 5, 1050, 'uploads/s5.jpg', 69, 8),
+(3, 'Puma RS-X', 'Casual sneakers with a retro style', 500.99, 109.99, 4, 750, 'uploads/s6.jpg', 69, 9),
+(4, 'airjorden', 'good shoes', 5000.00, 100.00, 4, 12, 'uploads/sh.jpg', 12, 7),
+(5, '\r\nRed Tape', 'Women Comfort Insole Sneakers', 300.00, 200.00, 4, 45, 'uploads/red.png', 47, 8),
+(6, 'Us polo canvas  ', 'Best sneakers for summer.', 1452.00, 500.00, 4, 14558, 'uploads/s1.jpg', 99, 7),
+(11, 'Nike covert', 'God comfortable all white sneaker for daily wear.', 1000.00, 499.00, 5, 123, 'uploads/s3.jfif', 100, 7),
+(12, 'Gucci women Heel', 'Shoetopia Block Heeled Sandals with Buckle Fastening For Girls', 5999.00, 2999.00, 4, 5578, 'uploads/w2', 80, 6),
+(13, 'Prose Women sandal', 'Embellished Heels for Girls for Festivities', 3599.00, 2499.00, 5, 723, 'uploads/w1', 156, 7);
 
 -- --------------------------------------------------------
 
@@ -209,9 +227,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `status`, `created_at`) VALUES
-(1, 'Prince kumar', 'prince1p100@gmail.com', '$2y$10$K4hZ98cyi/nTDLwi0jPAFOb9/82KhODjHxYwSegNVjV6YFiLucdzi', 'Manager', '', '2025-03-15 16:25:55'),
-(2, 'prince', 'prince966160@gmail.com', '$2y$10$dcbFouUFsMGoppguAlVP8e8DBV3Hi0b3CIxdPcb8eeaXMmOHS8Lau', 'Customer', 'Active', '2025-03-27 05:16:06'),
-(5, 'Harsh Kumar', 'harshkr.agrl@gmail.com', '$2y$10$OK4eKJ9B5OhacFDsU7kMM.U845yGkdrs78z56tOkL6VerIviys0sS', 'Customer', '', '2025-03-27 05:24:35');
+(1, 'Prince kumar', 'prince1p100@gmail.com', '$2y$10$Kuwb1pWDkoXEJNTFC7PdN.5e46C0rDKkHPkGkDQv66DehFQElaljS', 'Manager', '', '2025-03-15 16:25:55'),
+(2, 'prince', 'prince966160@gmail.com', '$2y$10$ICht9Ip9JObelSdgR7kere8t4LQVJJKLloNf/KXxkTkeKRk831sji', 'Customer', 'Active', '2025-03-27 05:16:06'),
+(5, 'Harsh Kumar', 'harshkr.agrl@gmail.com', '$2y$10$pK6ndKvDOetZhPPz5xY6B.tjJ.JIavZbJXlTmvQuw43BCSHS.7EHy', 'Customer', '', '2025-03-27 05:24:35'),
+(6, 'sunny kumar', 'sunnybhardwaj7549@gmail.com', '$2y$10$NN1/cyMDC7IkrooUKeVEJOJXO36l6SUqU4KBtnhyMdAzIiurwN38e', 'Customer', '', '2025-04-10 06:08:33');
 
 --
 -- Indexes for dumped tables
@@ -239,7 +258,9 @@ ALTER TABLE `inventory_usage`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `production`
@@ -280,7 +301,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `inventory`
@@ -298,7 +319,7 @@ ALTER TABLE `inventory_usage`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `production`
@@ -316,7 +337,7 @@ ALTER TABLE `production_schedule`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -328,7 +349,18 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
