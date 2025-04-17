@@ -40,14 +40,14 @@ header .container ul li a:hover {
 
 <!-- Navbar -->
 <header class="bg-blue-700 p-4 text-white shadow">
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step</h1>
-        <ul class="flex items-center">
-            <li><a href="index.php" class="hover:underline mr-8">Home</a></li> <!-- Added mr-8 for spacing -->
-            <li><a href="products.php" class="hover:underline mr-8">Shop</a></li> <!-- Added mr-8 for spacing -->
-            <li><a href="cart.php" class="hover:underline mr-8">Cart</a></li> <!-- Added mr-8 for spacing -->
+        <ul class="flex flex-wrap gap-4 mt-2 sm:mt-0">
+            <li><a href="index.php" class="hover:underline">Home</a></li>
+            <li><a href="products.php" class="hover:underline">Shop</a></li>
+            <li><a href="cart.php" class="hover:underline">Cart</a></li>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Customer'): ?>
-                <li><a href="my_orders.php" class="hover:underline mr-8">My Orders</a></li> <!-- Added mr-8 for spacing -->
+                <li><a href="my_orders.php" class="hover:underline">My Orders</a></li>
             <?php endif; ?>
             <li>
                 <?php
@@ -63,7 +63,7 @@ header .container ul li a:hover {
 
 <!-- Hero Section -->
 <section class="bg-blue-100 py-20 text-center">
-    <h2 class="text-5xl font-bold text-blue-800 mb-4">Step Into Comfort & Style</h2>
+    <h2 class="text-4xl sm:text-5xl font-bold text-blue-800 mb-4">Step Into Comfort & Style</h2>
     <p class="text-lg text-gray-700 mb-6">Explore our latest collection of trendy and comfortable footwear.</p>
     <a href="products.php" class="bg-blue-600 text-white px-8 py-3 rounded-full text-lg hover:bg-blue-700 transition">Shop Now</a>
 </section>
@@ -72,7 +72,7 @@ header .container ul li a:hover {
 <section class="py-16 bg-white">
     <div class="container mx-auto text-center">
         <h2 class="text-3xl font-bold mb-10 text-blue-800">Shop by Category</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div class="p-6 bg-blue-50 rounded-lg shadow hover:shadow-md transition">
                 <h3 class="text-xl font-semibold mb-2 text-blue-700">Men's Shoes</h3>
                 <p>Classy, casual, and comfy – all in one place.</p>
@@ -136,7 +136,6 @@ header .container ul li a:hover {
         </form>
     </div>
 </section>
-
 <!-- Footer -->
 <footer class="bg-gray-900 text-white mt-10">
     <div class="container mx-auto py-6 px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
