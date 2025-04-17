@@ -48,6 +48,26 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management - Smart Step</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Custom font override -->
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        nav ul li a {
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    text-decoration: none;
+    color: blue;
+    background-color: #ffffff;
+}
+
+    </style>
 </head>
 <body class="bg-gray-100">
     <!-- Navbar -->
@@ -55,14 +75,14 @@ $conn->close();
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Smart Step - Admin Dashboard</h1>
             <ul class="flex space-x-6">
-                <li><a href="admin.php" class="hover:underline">Dashboard</a></li>
-                <li><a href="index.php" class="hover:underline">Home</a></li>
-                <li><a href="order.php" class="hover:underline">Order</a></li>
-                <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
-                <li><a href="upload_product.php" class="hover:underline">Upload_Shoes</a></li>
-                <li><a href="update_quantity.php" class="hover:underline">Update_Shoes</a></li>
-                <li><a href="users.php" class="hover:underline">users</a></li>
-                <li><a href="logout.php" class="hover:underline">Logout</a></li>
+                <li><a href="admin.php" >Dashboard</a></li>
+                <li><a href="index.php" >Home</a></li>
+                <li><a href="order.php" >Order</a></li>
+                <li><a href="inventory.php" >Inventory</a></li>
+                <li><a href="upload_product.php" >Upload Shoes</a></li>
+                <li><a href="update_quantity.php" >Update Shoes</a></li>
+                <!-- <li><a href="users.php" >users</a></li> -->
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
     </nav>

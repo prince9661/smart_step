@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2025 at 10:44 AM
+-- Generation Time: Apr 16, 2025 at 04:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -108,13 +108,27 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `user_id`, `product_id`, `size`, `quantity`, `total_price`, `status`, `created_at`) VALUES
 (1, 2, 1, NULL, 1, 149.99, 'Completed', '2025-04-08 06:35:41'),
-(2, 2, 2, NULL, 1, 179.99, 'Pending', '2025-04-08 06:36:29'),
+(2, 2, 2, NULL, 1, 179.99, 'Completed', '2025-04-08 06:36:29'),
 (3, 2, 2, NULL, 1, 179.99, 'Completed', '2025-04-08 06:39:56'),
-(4, 2, 4, NULL, 3, 300.00, 'Pending', '2025-04-10 02:14:51'),
+(4, 2, 4, NULL, 3, 300.00, 'Completed', '2025-04-10 02:14:51'),
 (5, 5, 4, NULL, 1, 100.00, 'Completed', '2025-04-10 02:34:19'),
 (6, 6, 6, NULL, 1, 10.00, 'Completed', '2025-04-10 02:40:16'),
-(7, 2, 4, NULL, 1, 100.00, 'Pending', '2025-04-10 09:40:13'),
-(8, 2, 4, NULL, 1, 100.00, 'Completed', '2025-04-11 00:35:16');
+(7, 2, 4, NULL, 1, 100.00, 'Completed', '2025-04-10 09:40:13'),
+(8, 2, 4, NULL, 1, 100.00, 'Completed', '2025-04-11 00:35:16'),
+(9, 5, 2, NULL, 1, 179.99, 'Completed', '2025-04-15 06:19:41'),
+(10, 5, 2, NULL, 1, 179.99, 'Completed', '2025-04-15 06:32:39'),
+(11, 5, 11, NULL, 2, 998.00, 'Completed', '2025-04-15 12:01:52'),
+(12, 5, 1, NULL, 1, 149.99, 'Pending', '2025-04-16 02:35:59'),
+(13, 5, 1, NULL, 5, 749.95, 'Pending', '2025-04-16 09:32:02'),
+(14, 5, 1, NULL, 4, 599.96, 'Pending', '2025-04-16 09:41:27'),
+(15, 5, 2, NULL, 1, 179.99, 'Pending', '2025-04-16 09:49:10'),
+(16, 5, 2, NULL, 2, 359.98, 'Pending', '2025-04-16 09:52:13'),
+(17, 5, 2, NULL, 2, 359.98, 'Pending', '2025-04-16 10:00:40'),
+(18, 5, 5, NULL, 4, 800.00, 'Pending', '2025-04-16 10:02:39'),
+(19, 5, 1, NULL, 5, 749.95, 'Pending', '2025-04-16 10:06:26'),
+(20, 5, 12, NULL, 6, 17994.00, 'Pending', '2025-04-16 10:09:41'),
+(21, 5, 1, NULL, 2, 299.98, 'Pending', '2025-04-16 10:18:22'),
+(22, 5, 1, NULL, 2, 299.98, 'Pending', '2025-04-16 10:45:41');
 
 -- --------------------------------------------------------
 
@@ -182,15 +196,16 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `discount_price`, `rating`, `reviews`, `image`, `quantity`, `size`) VALUES
-(1, 'Nike Air Zoom Pegasus 39', 'Men\'s Road Running Shoes', 129.99, 149.99, 5, 1280, 'uploads/s4.jpg', 67, 7),
-(2, 'Adidas Ultraboost', 'High-performance running shoes', 159.99, 179.99, 5, 1050, 'uploads/s5.jpg', 69, 8),
+(1, 'Nike Air Zoom Pegasus 39', 'Men\'s Road Running Shoes', 129.99, 149.99, 5, 1280, 'uploads/s4.jpg', 68, 7),
+(2, 'Adidas Ultraboost', 'High-performance running shoes', 159.99, 179.99, 5, 1050, 'uploads/s5.jpg', 62, 8),
 (3, 'Puma RS-X', 'Casual sneakers with a retro style', 500.99, 109.99, 4, 750, 'uploads/s6.jpg', 69, 9),
-(4, 'airjorden', 'good shoes', 5000.00, 100.00, 4, 12, 'uploads/sh.jpg', 12, 7),
-(5, '\r\nRed Tape', 'Women Comfort Insole Sneakers', 300.00, 200.00, 4, 45, 'uploads/red.png', 47, 8),
+(4, 'airjorden', 'good shoes', 5000.00, 100.00, 4, 12, 'uploads/sh.jpg', 70, 7),
+(5, '\r\nRed Tape', 'Women Comfort Insole Sneakers', 300.00, 200.00, 4, 45, 'uploads/red.png', 43, 8),
 (6, 'Us polo canvas  ', 'Best sneakers for summer.', 1452.00, 500.00, 4, 14558, 'uploads/s1.jpg', 99, 7),
-(11, 'Nike covert', 'God comfortable all white sneaker for daily wear.', 1000.00, 499.00, 5, 123, 'uploads/s3.jfif', 100, 7),
-(12, 'Gucci women Heel', 'Shoetopia Block Heeled Sandals with Buckle Fastening For Girls', 5999.00, 2999.00, 4, 5578, 'uploads/w2', 80, 6),
-(13, 'Prose Women sandal', 'Embellished Heels for Girls for Festivities', 3599.00, 2499.00, 5, 723, 'uploads/w1', 156, 7);
+(11, 'Nike covert', 'God comfortable all white sneaker for daily wear.', 1000.00, 499.00, 5, 123, 'uploads/s3.jpg', 98, 7),
+(12, 'Gucci women Heel', 'Shoetopia Block Heeled Sandals with Buckle Fastening For Girls', 5999.00, 2999.00, 4, 5578, 'uploads/w2', 74, 6),
+(13, 'Prose Women sandal', 'Embellished Heels for Girls for Festivities', 3599.00, 2499.00, 5, 723, 'uploads/w1', 156, 7),
+(14, 'Redtape classic', 'Very comfortable shoe for daily wear', 600.00, 300.00, 5, 1000, 'uploads/1.jpg', 51, 9);
 
 -- --------------------------------------------------------
 
@@ -230,7 +245,8 @@ INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `status`, `
 (1, 'Prince kumar', 'prince1p100@gmail.com', '$2y$10$Kuwb1pWDkoXEJNTFC7PdN.5e46C0rDKkHPkGkDQv66DehFQElaljS', 'Manager', '', '2025-03-15 16:25:55'),
 (2, 'prince', 'prince966160@gmail.com', '$2y$10$ICht9Ip9JObelSdgR7kere8t4LQVJJKLloNf/KXxkTkeKRk831sji', 'Customer', 'Active', '2025-03-27 05:16:06'),
 (5, 'Harsh Kumar', 'harshkr.agrl@gmail.com', '$2y$10$pK6ndKvDOetZhPPz5xY6B.tjJ.JIavZbJXlTmvQuw43BCSHS.7EHy', 'Customer', '', '2025-03-27 05:24:35'),
-(6, 'sunny kumar', 'sunnybhardwaj7549@gmail.com', '$2y$10$NN1/cyMDC7IkrooUKeVEJOJXO36l6SUqU4KBtnhyMdAzIiurwN38e', 'Customer', '', '2025-04-10 06:08:33');
+(6, 'sunny kumar', 'sunnybhardwaj7549@gmail.com', '$2y$10$NN1/cyMDC7IkrooUKeVEJOJXO36l6SUqU4KBtnhyMdAzIiurwN38e', 'Customer', '', '2025-04-10 06:08:33'),
+(8, 'Harsh Agrawal', 'hyper123nova@gmail.com', '$2y$10$mpCKaQ0IS1bY09vc9y5NNe2h.ZI4SnzgWMbhVw14iNFJHumEmKK9G', 'Manager', 'Active', '2025-04-16 09:56:58');
 
 --
 -- Indexes for dumped tables
@@ -301,7 +317,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `inventory`
@@ -319,7 +335,7 @@ ALTER TABLE `inventory_usage`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `production`
@@ -337,7 +353,7 @@ ALTER TABLE `production_schedule`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -349,7 +365,7 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

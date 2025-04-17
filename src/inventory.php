@@ -17,6 +17,26 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management - Smart Step</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Custom font override -->
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        nav ul li a {
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    text-decoration: none;
+    color: blue;
+    background-color: #ffffff;
+}
+
+    </style>
 </head>
 <body class="bg-gray-100">
     <!-- Navbar -->
@@ -24,66 +44,70 @@ $result = $conn->query($sql);
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Smart Step</h1>
             <ul class="flex space-x-6">
-            <li><a href="admin.php" class="hover:underline">Dashboard</a></li>
-            <li><a href="index.php" class="hover:underline">Home</a></li>
-            <li><a href="order.php" class="hover:underline">Order</a></li>
-            <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
-            <li><a href="upload_product.php" class="hover:underline">Upload_Shoes</a></li>
-            <li><a href="update_quantity.php" class="hover:underline">Update_Shoes</a></li>
-            <li><a href="logout.php" class="hover:underline">Logout</a></li>
+            <li><a href="admin.php">Dashboard</a></li>
+            <li><a href="index.php" >Home</a></li>
+            <li><a href="order.php" >Order</a></li>
+            <!-- <li><a href="inventory.php" class="hover:underline">Inventory</a></li> -->
+            <li><a href="upload_product.php">Upload Shoes</a></li>
+            <li><a href="update_quantity.php" >Update Shoes</a></li>
+            <li><a href="logout.php" >Logout</a></li>
             </ul>
         </div>
     </nav>
     
-    <!-- Inventory Overview -->
-    <section class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-3xl font-bold text-center">Manage Your Inventory Efficiently</h2>
-        <p class="text-gray-700 text-center mt-2">Track raw materials in real-time and ensure seamless shoe production.</p>
-        
-        <!-- Inventory Table -->
-        <div class="mt-6 overflow-x-auto">
-            <table class="w-full border-collapse bg-white shadow-md">
-                <thead>
-                    <tr class="bg-blue-600 text-white">
-                        <th class="p-3 text-left">Material Name</th>
-                        <th class="p-3 text-left">Current Stock</th>
-                        <th class="p-3 text-left">Required Stock</th>
-                        <th class="p-3 text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr class="border-b">
-                            <td class="p-3"><?php echo $row['material_name']; ?></td>
-                            <td class="p-3"><?php echo $row['current_stock']; ?></td>
-                            <td class="p-3"><?php echo $row['required_stock']; ?></td>
-                            <td class="p-3">
-                                <?php 
-                                    $status = "<span class='text-green-600'>Sufficient</span>";
-                                    if ($row['current_stock'] <= $row['required_stock'] * 0.5) {
-                                        $status = "<span class='text-red-600 font-bold'>Critical - Restock Needed!</span>";
-                                    } elseif ($row['current_stock'] <= $row['required_stock'] * 0.8) {
-                                        $status = "<span class='text-yellow-500 font-semibold'>Low Stock</span>";
-                                    }
-                                    echo $status;
-                                ?>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        </div>
-    </section>
-    
-    <!-- Stock Alerts & Restock -->
-    <section class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg text-center">
-        <h3 class="text-2xl font-bold">Stock Alerts</h3>
-        <p class="mt-2 text-gray-700">Receive notifications when stock levels are low.</p>
-        <a href="manage_inventory.php" class="mt-4 inline-block bg-red-500 text-white px-6 py-3 text-lg font-semibold rounded-lg hover:bg-red-600">Request Restock</a>
-    </section>
+    <section class="container mx-auto mt-10 px-4">
+  <div class="bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-3xl font-bold text-center">Manage Your Inventory Efficiently</h2>
+    <p class="text-gray-700 text-center mt-2">Track raw materials in real-time and ensure seamless shoe production.</p>
+
+    <!-- Inventory Table -->
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full border-collapse bg-white shadow-md">
+        <thead>
+          <tr class="bg-gray-500 text-white">
+            <th class="p-3 text-left">Material Name</th>
+            <th class="p-3 text-left">Current Stock</th>
+            <th class="p-3 text-left">Required Stock</th>
+            <th class="p-3 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <tr class="border-b">
+              <td class="p-3"><?php echo $row['material_name']; ?></td>
+              <td class="p-3"><?php echo $row['current_stock']; ?></td>
+              <td class="p-3"><?php echo $row['required_stock']; ?></td>
+              <td class="p-3">
+                <?php 
+                  $status = "<span class='text-green-600'>Sufficient</span>";
+                  if ($row['current_stock'] <= $row['required_stock'] * 0.5) {
+                    $status = "<span class='text-red-600 font-bold'>Critical - Restock Needed!</span>";
+                  } elseif ($row['current_stock'] <= $row['required_stock'] * 0.8) {
+                    $status = "<span class='text-yellow-500 font-semibold'>Low Stock</span>";
+                  }
+                  echo $status;
+                ?>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<section class="container mx-auto mt-10 px-4">
+  <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+    <h3 class="text-2xl font-bold">Stock Alerts</h3>
+    <p class="mt-2 text-gray-700">Receive notifications when stock levels are low.</p>
+    <a href="manage_inventory.php" class="mt-4 inline-block bg-red-500 text-white px-6 py-3 text-lg font-semibold rounded-lg hover:bg-red-600">
+      Request Restock
+    </a>
+  </div>
+</section>
+
     
     <!-- Footer -->
-    <footer class="bg-blue-600 text-white text-center py-6 mt-10">
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
         <p>&copy; 2025 Smart Step. All rights reserved.</p>
         <div class="mt-4">
             <a href="#" class="hover:underline mx-2">Inventory Reports</a>
