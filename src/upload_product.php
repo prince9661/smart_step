@@ -131,5 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"><?= $edit ? 'Update' : 'Upload' ?> Product</button>
         </form>
     </div>
+    
 </body>
 </html>

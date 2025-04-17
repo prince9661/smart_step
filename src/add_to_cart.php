@@ -64,7 +64,7 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
 $conn->close();
 ?>
 
-<!-- HTML + Sticky Footer Layout -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,29 +72,25 @@ $conn->close();
     <title>Smart Step - Add to Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Poppins', sans-serif !important;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ["Poppins", "sans-serif"],
+                    },
+                },
+            },
         }
-        header .container ul li a {
-    padding: 4px 8px;          /* Same padding as hover */
-    border-radius: 4px;        /* Apply border-radius always */
-    transition: background-color 0.3s, color 0.3s; /* smooth effect */
-}
-
-header .container ul li a:hover {
-    text-decoration: none;
-    color: blue;
-    background-color: #ffffff;
-}
-
-    </style>
+    </script>
 </head>
-<body class="flex flex-col min-h-screen bg-gray-50">
+<body class="flex flex-col min-h-screen bg-gray-50 font-poppins">
 
     <!-- Header -->
     <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-xl font-semibold">Smart Step</h1>
+        <div class="container mx-auto">
+            <h1 class="text-xl font-semibold">Smart Step</h1>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -102,11 +98,11 @@ header .container ul li a:hover {
         <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-md text-center">
             <h2 class="text-xl font-bold mb-4">Cart Status</h2>
             <p class="text-gray-800"><?php echo $message; ?></p>
-            <a href="products.php" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Back to Products</a>
+            <a href="products.php" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Back to Products</a>
         </div>
     </main>
 
-    <!-- Sticky Footer -->
+    <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4">
         &copy; <?php echo date("Y"); ?> Smart Step. All rights reserved.
     </footer>

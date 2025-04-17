@@ -22,6 +22,24 @@ $orders = $conn->query("SELECT o.*, p.name AS product_name, p.image
     <meta charset="UTF-8">
     <title>My Orders - Smart Step</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        nav ul li a {
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            text-decoration: none;
+            color: blue;
+            background-color: #ffffff;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen ">
 <header class="bg-blue-600 p-2 text-white">
@@ -30,17 +48,15 @@ $orders = $conn->query("SELECT o.*, p.name AS product_name, p.image
             <nav class="bg-blue-600 p-4 text-white">
                 <div class="container mx-auto flex justify-between items-center">
                     <ul class="flex space-x-6 items-center">
-                        <li><a href="index.php" class="hover:underline">Home</a></li>
-                        <li><a href="products.php" class="hover:underline">Products</a></li>
-                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Customer'): ?>
-                            <li><a href="my_orders.php" class="hover:underline">My Orders</a></li>
-                        <?php endif; ?>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="products.php" >Products</a></li>
+                        
                         <li>
                             <?php
                             if (isset($_SESSION["user_id"])) {
-                                echo "<a href='logout.php' class='hover:underline'>Logout</a>";
+                                echo "<a href='logout.php'>Logout</a>";
                             } else {
-                                echo "<a href='login.php' class='hover:underline'>Login</a>";
+                                echo "<a href='login.php' >Login</a>";
                             }
                             ?>
                         </li>
@@ -50,7 +66,7 @@ $orders = $conn->query("SELECT o.*, p.name AS product_name, p.image
 
         </div>
 </header>
-    <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">My Orders</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center text-blue-600 pt-2">My Orders</h1>
 
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow p-6 space-y-4">
         <?php if ($orders->num_rows > 0): ?>
@@ -69,5 +85,9 @@ $orders = $conn->query("SELECT o.*, p.name AS product_name, p.image
             <p class="text-center text-gray-600">You haven't placed any orders yet.</p>
         <?php endif; ?>
     </div>
+    <!-- Footer -->
+<footer class="bg-gray-800 text-white text-center py-4 mt-10">
+    &copy; 2025 Smart Step. All rights reserved.
+</footer>
 </body>
 </html>

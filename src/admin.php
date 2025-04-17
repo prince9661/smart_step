@@ -19,14 +19,8 @@ $products = $conn->query("SELECT * FROM products");
     <meta charset="UTF-8">
     <title>Admin Dashboard - Smart Step</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
-    <!-- Custom font override -->
     <style>
         * {
             font-family: 'Poppins', sans-serif !important;
