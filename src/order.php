@@ -5,7 +5,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 $sql = "SELECT orders.*, products.name AS product_name, products.size, users.full_name 
         FROM orders 
         JOIN products ON orders.product_id = products.id 
@@ -22,80 +21,101 @@ $result = $conn->query($sql);
     <title>Orders - Admin Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        nav ul li a {
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            text-decoration: none;
+            color: blue;
+            background-color: #ffffff;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 flex flex-col min-h-screen">
 
 <!-- Navbar -->
 <nav class="bg-blue-600 p-4 text-white">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step - Orders</h1>
         <ul class="flex space-x-6">
-            <li><a href="admin.php" class="hover:underline">Dashboard</a></li>
-            <li><a href="index.php" class="hover:underline">Home</a></li>
-            <li><a href="order.php" class="hover:underline">Order</a></li>
-            <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
-            <li><a href="upload_product.php" class="hover:underline">Upload_Shoes</a></li>
-            <li><a href="update_quantity.php" class="hover:underline">Update_Shoes</a></li>
-            <li><a href="logout.php" class="hover:underline">Logout</a></li>
+            <li><a href="admin.php" >Dashboard</a></li>
+            <li><a href="index.php" >Home</a></li>
+            <!-- <li><a href="order.php" >Order</a></li> -->
+            <li><a href="inventory.php" >Inventory</a></li>
+            <li><a href="upload_product.php" >Upload Shoes</a></li>
+            <li><a href="update_quantity.php" >Update Shoes</a></li>
+            <li><a href="logout.php" >Logout</a></li>
         </ul>
     </div>
 </nav>
 
 <!-- Orders Table -->
-<section class="container mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">All Orders</h2>
+<!-- Orders Section -->
+<section class="container mx-auto mt-10 px-4">
+  <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+    <h2 class="text-2xl font-bold mb-6">All Orders</h2>
     <div class="overflow-x-auto">
-        <table class="min-w-full border text-sm">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="p-3 border">Order ID</th>
-                    <th class="p-3 border">Customer Name</th>
-                    <th class="p-3 border">Product</th>
-                    <th class="p-3 border">Size</th>
-                    <th class="p-3 border">Quantity</th>
-                    <th class="p-3 border">Total Price</th>
-                    <th class="p-3 border">Status</th>
-                    <th class="p-3 border">Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($result && $result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr class="text-center border-t">
-                            <td class="p-2"><?= $row['id'] ?></td>
-                            <td class="p-2"><?= htmlspecialchars($row['full_name']) ?></td>
-                            <td class="p-2"><?= htmlspecialchars($row['product_name']) ?></td>
-                            <td class="p-2"><?= htmlspecialchars($row['size']) ?></td>
-                            <td class="p-2"><?= $row['quantity'] ?></td>
-                            <td class="p-2">₹<?= number_format($row['total_price'], 2) ?></td>
-                            <td class="p-2">
-                                <?php
-                                $status = $row['status'];
-                                $color = match ($status) {
-                                    'Pending' => 'bg-yellow-200 text-yellow-800',
-                                    'Completed' => 'bg-green-200 text-green-800',
-                                    'Cancelled' => 'bg-red-200 text-red-800',
-                                    default => 'bg-gray-200 text-gray-800',
-                                };
-                                ?>
-                                <span class="px-3 py-1 rounded-full <?= $color ?>"><?= $status ?></span>
-                            </td>
-                            <td class="p-2"><?= date("d M Y", strtotime($row['created_at'])) ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="8" class="text-center p-4 text-gray-600">No orders found.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+      <table class="min-w-full border text-sm">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="p-4 border">Order ID</th>
+            <th class="p-4 border">Customer Name</th>
+            <th class="p-4 border">Product</th>
+            <th class="p-4 border">Size</th>
+            <th class="p-4 border">Quantity</th>
+            <th class="p-4 border">Total Price</th>
+            <th class="p-4 border">Status</th>
+            <th class="p-4 border">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($result && $result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+              <tr class="text-center border-t">
+                <td class="p-4"><?= $row['id'] ?></td>
+                <td class="p-4"><?= htmlspecialchars($row['full_name']) ?></td>
+                <td class="p-4"><?= htmlspecialchars($row['product_name']) ?></td>
+                <td class="p-4"><?= htmlspecialchars($row['size']) ?></td>
+                <td class="p-4"><?= $row['quantity'] ?></td>
+                <td class="p-4">₹<?= number_format($row['total_price'], 2) ?></td>
+                <td class="p-4">
+                  <?php
+                  $status = $row['status'];
+                  $color = match ($status) {
+                      'Pending' => 'bg-yellow-200 text-yellow-800',
+                      'Completed' => 'bg-green-200 text-green-800',
+                      'Cancelled' => 'bg-red-200 text-red-800',
+                      default => 'bg-gray-200 text-gray-800',
+                  };
+                  ?>
+                  <span class="px-4 py-2 rounded-full <?= $color ?>"><?= $status ?></span>
+                </td>
+                <td class="p-4"><?= date("d M Y", strtotime($row['created_at'])) ?></td>
+              </tr>
+            <?php endwhile; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="8" class="text-center p-4 text-gray-600">No orders found.</td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
     </div>
+  </div>
 </section>
 
 <!-- Footer -->
-<footer class="bg-gray-800 text-white text-center py-4 mt-10">
-    &copy; 2025 Smart Step. All rights reserved.
+<footer class="bg-gray-800 text-white text-center p-4 mt-10">
+    <p>&copy; 2025 Smart Step. All rights reserved.</p>
 </footer>
 
 </body>

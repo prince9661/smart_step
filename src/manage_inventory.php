@@ -13,10 +13,10 @@ if (isset($_POST['add_material'])) {
     $unit_type = $_POST['unit_type'];
     $current_stock = $_POST['current_stock'];
     $min_required_stock = $_POST['min_required_stock'];
-    $min_required_stock = $_POST['required_stock'];
+    $required_stock = $_POST['required_stock'];
 
     $conn->query("INSERT INTO inventory (material_name, unit_type, current_stock, min_required_stock, required_stock) 
-                  VALUES ('$material_name', '$unit_type', $current_stock, $min_required_stock, '$required_stock')");
+                  VALUES ('$material_name', '$unit_type', $current_stock, $min_required_stock, $required_stock)");
 
     header("Location: manage_inventory.php");
     exit();
@@ -56,88 +56,105 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Inventory - Smart Step</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        nav ul li a {
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            text-decoration: none;
+            color: blue;
+            background-color: #ffffff;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
+
     <!-- Navbar -->
     <nav class="bg-blue-600 p-4 text-white">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Smart Step - Manage Inventory</h1>
             <ul class="flex space-x-6">
-                <li><a href="admin.php" class="hover:underline">Dashboard</a></li>
-                <li><a href="index.php" class="hover:underline">Home</a></li>
-                <li><a href="order.php" class="hover:underline">Order</a></li>
-                <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
-                <li><a href="upload_product.php" class="hover:underline">Upload_Shoes</a></li>
-                <li><a href="update_quantity.php" class="hover:underline">Update_Shoes</a></li>
-                <li><a href="logout.php" class="hover:underline">Logout</a></li>
+                <li><a href="admin.php">Dashboard</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="order.php">Order</a></li>
+                <li><a href="inventory.php">Inventory</a></li>
+                <li><a href="upload_product.php">Upload Shoes</a></li>
+                <li><a href="update_quantity.php">Update Shoes</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Inventory Overview -->
-    <section class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-3xl font-bold text-center mb-6">Manage Raw Materials & Stock Levels 🏭</h2>
-        <p class="text-gray-600 text-center">Track materials, update stock, and automate restocking.</p>
+    <section class="container mx-auto mt-10 px-4">
+  <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+    <h2 class="text-3xl font-bold">Manage Your Inventory Efficiently</h2>
+    <p class="text-gray-700 mt-2">Track raw materials in real-time and ensure seamless shoe production.</p>
 
-        <!-- Inventory Table -->
-        <div class="overflow-x-auto mt-6">
-            <table class="min-w-full bg-white border border-gray-200">
-                <thead>
-                    <tr class="bg-gray-100">
-                        <th class="border p-3">Material Name</th>
-                        <th class="border p-3">Unit Type</th>
-                        <th class="border p-3">Current Stock</th>
-                        <th class="border p-3">Minimum Required</th>
-                        <th class="border p-3">Status</th>
-                        <th class="border p-3">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr class="border">
-                            <td class="border p-3"><?= $row['material_name'] ?></td>
-                            <td class="border p-3"><?= $row['unit_type'] ?></td>
-                            <td class="border p-3"><?= $row['current_stock'] ?></td>
-                            <td class="border p-3"><?= $row['min_required_stock'] ?></td>
-                            <td class="border p-3 text-center <?= ($row['current_stock'] >= $row['min_required_stock']) ? 'text-green-500' : (($row['current_stock'] > 0) ? 'text-yellow-500' : 'text-red-500') ?>">
-                                <?= ($row['current_stock'] >= $row['min_required_stock']) ? '✔️ Sufficient' : (($row['current_stock'] > 0) ? '⚠️ Low Stock' : '❌ Critical') ?>
-                            </td>
-                            <td class="border p-3 text-center">
-                                <!-- Update Stock Form -->
-                                <form method="POST" class="inline-block">
-                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                    <input type="number" name="new_stock" class="border p-1 w-20" value="<?= $row['current_stock'] ?>">
-                                    <button type="submit" name="update_stock" class="bg-blue-500 text-white px-3 py-1 rounded">Update</button>
-                                </form>
-                                <!-- Delete Material Form -->
-                                <form method="POST" class="inline-block">
-                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                    <button type="submit" name="delete_material" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        </div>
-    </section>
+    <!-- Inventory Table -->
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full border-collapse bg-white shadow-md text-left">
+        <thead>
+          <tr class=" text-white bg-gray-500">
+            <th class="p-3">Material Name</th>
+            <th class="p-3">Current Stock</th>
+            <th class="p-3">Required Stock</th>
+            <th class="p-3">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <tr class="border-b">
+              <td class="p-3"><?php echo $row['material_name']; ?></td>
+              <td class="p-3"><?php echo $row['current_stock']; ?></td>
+              <td class="p-3"><?php echo $row['required_stock']; ?></td>
+              <td class="p-3">
+                <?php 
+                  $status = "<span class='text-green-600'>Sufficient</span>";
+                  if ($row['current_stock'] <= $row['required_stock'] * 0.5) {
+                    $status = "<span class='text-red-600 font-bold'>Critical - Restock Needed!</span>";
+                  } elseif ($row['current_stock'] <= $row['required_stock'] * 0.8) {
+                    $status = "<span class='text-yellow-500 font-semibold'>Low Stock</span>";
+                  }
+                  echo $status;
+                ?>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
     <!-- Add New Material Section -->
-    <section class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-2xl font-bold text-center mb-4">Add New Raw Material</h2>
-        <form method="POST" class="flex flex-col items-center">
-            <input type="text" name="material_name" placeholder="Material Name" required class="border p-2 m-2 w-1/2">
-            <input type="text" name="unit_type" placeholder="Unit Type (meters, pieces, etc.)" required class="border p-2 m-2 w-1/2">
-            <input type="number" name="current_stock" placeholder="Initial Stock Quantity" required class="border p-2 m-2 w-1/2">
-            <input type="number" name="min_required_stock" placeholder="Minimum Required Stock" required class="border p-2 m-2 w-1/2">
-            <input type="number" name="required_stock" placeholder="Required Stock" required class="border p-2 m-2 w-1/2">
-            <button type="submit" name="add_material" class="bg-green-500 text-white px-4 py-2 rounded">Add Material</button>
-        </form>
-    </section>
+<section class="container mx-auto mt-10 px-4">
+  <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+    <h2 class="text-2xl font-bold mb-4">Add New Raw Material</h2>
+    <form method="POST" class="flex flex-col items-center">
+        <input type="text" name="material_name" placeholder="Material Name" required class="border p-2 m-2 w-1/2">
+        <input type="text" name="unit_type" placeholder="Unit Type (meters, pieces, etc.)" required class="border p-2 m-2 w-1/2">
+        <input type="number" name="current_stock" placeholder="Initial Stock Quantity" required class="border p-2 m-2 w-1/2">
+        <input type="number" name="min_required_stock" placeholder="Minimum Required Stock" required class="border p-2 m-2 w-1/2">
+        <input type="number" name="required_stock" placeholder="Required Stock" required class="border p-2 m-2 w-1/2">
+        <button type="submit" name="add_material" class="bg-green-500 text-white px-4 py-2 rounded mt-4">Add Material</button>
+    </form>
+  </div>
+</section>
+
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center p-4 mt-10">
         <p>&copy; 2025 Smart Step. All rights reserved.</p>
     </footer>
+
 </body>
 </html>
