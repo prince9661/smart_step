@@ -66,22 +66,23 @@ nav ul li a:hover {
 <!-- Dashboard Metrics -->
 <section class="container mx-auto mt-10 px-4">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="bg-blue-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold" id="totalOrders">0</h3>
-            <p>Total Orders</p>
-        </div>
-        <div class="bg-yellow-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold" id="pendingOrders">0</h3>
-            <p>Pending Orders</p>
-        </div>
-        <div class="bg-green-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold" id="completedOrders">0</h3>
-            <p>Completed Orders</p>
-        </div>
-        <div class="bg-red-200 p-6 rounded-lg text-center">
-            <h3 class="text-2xl font-bold" id="lowStockItems">0</h3>
-            <p>Low Stock Alerts</p>
-        </div>
+    <div class="bg-blue-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="totalOrders">0</h3>
+    <p>Total Orders</p>
+</div>
+<div class="bg-yellow-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="pendingOrders">0</h3>
+    <p>Pending Orders</p>
+</div>
+<div class="bg-green-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="completedOrders">0</h3>
+    <p>Completed Orders</p>
+</div>
+<div class="bg-red-200 p-6 rounded-lg text-center">
+    <h3 class="text-2xl font-bold" id="lowStockItems">0</h3>
+    <p>Low Stock Alerts</p>
+</div>
+
     </div>
 </section>
 
@@ -107,11 +108,11 @@ nav ul li a:hover {
         <tbody>
             <?php while ($row = $products->fetch_assoc()): ?>
                 <tr class="border-t">
-                    <td class="p-3"><img src="<?= $row['image'] ?>" class="w-16 h-16 object-cover"></td>
-                    <td class="p-3"><?= $row['name'] ?></td>
-                    <td class="p-3"><?= $row['size'] ?></td>
-                    <td class="p-3"><?= $row['quantity'] ?></td>
-                    <td class="p-3">
+                    <td class="p-2"><img src="<?= $row['image'] ?>" class="w-16 h-16 object-cover"></td>
+                    <td class="p-2"><?= $row['name'] ?></td>
+                    <td class="p-2"><?= $row['size'] ?></td>
+                    <td class="p-2"><?= $row['quantity'] ?></td>
+                    <td class="p-2">
                         <?php if ($row['quantity'] < 20): ?>
                             <span class="text-red-600 font-semibold">Low Stock</span>
                         <?php else: ?>
