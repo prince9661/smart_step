@@ -43,6 +43,26 @@ if (isset($_POST['send_otp'])) {
     <meta charset="UTF-8">
     <title>Forgot Password - Smart Step</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Custom font override -->
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        nav ul li a {
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    text-decoration: none;
+    color: blue;
+    background-color: #ffffff;
+}
+
+    </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white p-6 rounded-lg shadow-md w-96">

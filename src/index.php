@@ -22,9 +22,9 @@ $products = $conn->query("SELECT * FROM products LIMIT 8");
             font-family: 'Poppins', sans-serif !important;
         }
         header .container ul li a {
-    padding: 4px 8px;          /* Same padding as hover */
-    border-radius: 4px;        /* Apply border-radius always */
-    transition: background-color 0.3s, color 0.3s; /* smooth effect */
+    padding: 4px 8px;         
+    border-radius: 4px;       
+    transition: background-color 0.3s, color 0.3s; 
 }
 
 header .container ul li a:hover {
