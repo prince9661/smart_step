@@ -43,20 +43,33 @@ $result = $conn->query($sql);
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
 <!-- Navbar -->
-<nav class="bg-blue-600 p-4 text-white">
+<nav class="bg-blue-600 p-4 text-white font-[Poppins]">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step - Orders</h1>
         <ul class="flex space-x-6">
-            <li><a href="admin.php" >Dashboard</a></li>
-            <li><a href="index.php" >Home</a></li>
-            <!-- <li><a href="order.php" >Order</a></li> -->
-            <li><a href="inventory.php" >Inventory</a></li>
-            <li><a href="upload_product.php" >Upload Shoes</a></li>
-            <li><a href="update_quantity.php" >Update Shoes</a></li>
-            <li><a href="logout.php" >Logout</a></li>
+            <li>
+                <a href="admin.php" class="px-2 py-1 rounded transition duration-300 hover:text-blue-600 hover:bg-white">Dashboard</a>
+            </li>
+            <li>
+                <a href="index.php" class="px-2 py-1 rounded transition duration-300 hover:text-blue-600 hover:bg-white">Home</a>
+            </li>
+            <!-- <li><a href="order.php" class="px-2 py-1 rounded transition duration-300 hover:text-blue-600 hover:bg-white">Order</a></li> -->
+            <li>
+                <a href="inventory.php" class="px-2 py-1 rounded transition duration-300 hover:text-blue-600 hover:bg-white">Inventory</a>
+            </li>
+            <li>
+                <a href="upload_product.php" class="px-2 py-1 rounded transition duration-300 hover:text-blue-600 hover:bg-white">Upload Shoes</a>
+            </li>
+            <li>
+                <a href="update_quantity.php" class="px-2 py-1 rounded transition duration-300 hover:text-blue-600 hover:bg-white">Update Shoes</a>
+            </li>
+            <li>
+                <a href="logout.php" class="px-2 py-1 rounded transition duration-300 hover:text-blue-600 hover:bg-white">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>
+
 
 <!-- Orders Table -->
 <!-- Orders Section -->
