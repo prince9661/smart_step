@@ -28,23 +28,32 @@ $products = $conn->query("SELECT * FROM products LIMIT 8");
 <header class="bg-blue-700 p-4 text-white shadow">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step</h1>
-        <ul class="flex items-center">
-            <li><a href="index.php" class="hover:underline mr-8">Home</a></li>
-            <li><a href="products.php" class="hover:underline mr-8">Shop</a></li>
-            <li><a href="cart.php" class="hover:underline mr-8">Cart</a></li>
+        <ul class="flex items-center space-x-4">
+            <li><a href="index.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">Home</a></li>
+            <li>
+                <a href="products.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">Shop</a>
+            </li>
+            <li>
+                <a href="cart.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">Cart</a>
+            </li>
+
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Customer'): ?>
-                <li><a href="my_orders.php" class="hover:underline mr-8">My Orders</a></li>
+                <li>
+                    <a href="my_orders.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">My Orders</a>
+                </li>
             <?php endif; ?>
+
             <li>
                 <?php
-                echo isset($_SESSION["user_id"])
-                    ? "<a href='logout.php' class='hover:underline'>Logout</a>"
-                    : "<a href='login.php' class='hover:underline'>Login</a>";
+                    echo isset($_SESSION["user_id"])
+                        ? "<a href='logout.php' class='hover:bg-white hover:text-blue-600 px-2 py-1 rounded'>Logout</a>"
+                        : "<a href='login.php' class='hover:bg-white hover:text-blue-600 px-2 py-1 rounded'>Login</a>";
                 ?>
             </li>
         </ul>
     </div>
 </header>
+
 
 <!-- Hero Section -->
 <section class="bg-blue-100 py-20 text-center">
