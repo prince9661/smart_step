@@ -46,13 +46,13 @@ nav ul li a:hover {
     <div class="container mx-auto flex flex-wrap justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step - Admin Dashboard</h1>
         <ul class="flex flex-wrap gap-4 mt-2 sm:mt-0">
-            <li><a href="index.php" class="hover:underline">Home</a></li>
-            <li><a href="order.php" class="hover:underline">Order</a></li>
-            <li><a href="inventory.php" class="hover:underline">Inventory</a></li>
-            <li><a href="upload_product.php" class="hover:underline">Upload Shoes</a></li>
-            <li><a href="update_quantity.php" class="hover:underline">Update Shoes</a></li>
-            <li><a href="users.php" class="hover:underline">Users</a></li>
-            <li><a href="logout.php" class="hover:underline">Logout</a></li>
+            <li><a href="index.php" >Home</a></li>
+            <li><a href="order.php" >Order</a></li>
+            <li><a href="inventory.php" >Inventory</a></li>
+            <li><a href="upload_product.php" >Upload Shoes</a></li>
+            <li><a href="update_quantity.php" >Update Shoes</a></li>
+            <li><a href="users.php" >Users</a></li>
+            <li><a href="logout.php" >Logout</a></li>
         </ul>
     </div>
 </nav>
