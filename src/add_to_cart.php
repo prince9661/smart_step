@@ -18,7 +18,7 @@ if ($_SESSION['role'] == 'Manager') {
     exit();
 }
 
-// Handle Add to Cart
+//  Add to Cart
 $message = "";
 
 if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
@@ -26,10 +26,9 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
     $quantity = (int)$_POST['quantity'];
     $user_id = $_SESSION['user_id'];
 
-    $sql = $conn->prepare("SELECT * FROM products WHERE id = ?");
-    $sql->bind_param("i", $product_id);
-    $sql->execute();
-    $result = $sql->get_result();
+    // Get product details
+    $sql = "SELECT * FROM products WHERE id = $product_id";
+    $result = $conn->query($sql);
 
     if ($result->num_rows === 1) {
         $product = $result->fetch_assoc();
@@ -37,19 +36,25 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
         if ($quantity > $product['quantity']) {
             $message = "Only {$product['quantity']} item(s) left in stock.";
         } else {
-            $checkCart = $conn->prepare("SELECT * FROM cart WHERE product_id = ? AND user_id = ?");
-            $checkCart->bind_param("ii", $product_id, $user_id);
-            $checkCart->execute();
-            $cartResult = $checkCart->get_result();
+            // Check if item already in cart
+            $checkCartSql = "SELECT * FROM cart WHERE product_id = $product_id AND user_id = $user_id";
+            $cartResult = $conn->query($checkCartSql);
 
             if ($cartResult->num_rows > 0) {
-                $updateCart = $conn->prepare("UPDATE cart SET quantity = quantity + ? WHERE product_id = ? AND user_id = ?");
-                $updateCart->bind_param("iii", $quantity, $product_id, $user_id);
-                $updateCart->execute();
+                // Update quantity
+                $updateSql = "UPDATE cart SET quantity = quantity + $quantity WHERE product_id = $product_id AND user_id = $user_id";
+                $conn->query($updateSql);
             } else {
-                $stmt = $conn->prepare("INSERT INTO cart (product_id, name, description, price, discount_price, quantity, image, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("issddisi", $product['id'], $product['name'], $product['description'], $product['price'], $product['discount_price'], $quantity, $product['image'], $user_id);
-                $stmt->execute();
+                // Insert new item to cart
+                $name = $conn->real_escape_string($product['name']);
+                $description = $conn->real_escape_string($product['description']);
+                $price = $product['price'];
+                $discount_price = $product['discount_price'];
+                $image = $conn->real_escape_string($product['image']);
+
+                $insertSql = "INSERT INTO cart (product_id, name, description, price, discount_price, quantity, image, user_id) 
+                              VALUES ($product_id, '$name', '$description', $price, $discount_price, $quantity, '$image', $user_id)";
+                $conn->query($insertSql);
             }
 
             $message = "Product added to cart successfully!";
