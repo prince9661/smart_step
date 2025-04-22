@@ -10,22 +10,28 @@ if ($conn->connect_error) {
 // Handle OTP Generation and Sending
 if (isset($_POST['send_otp'])) {
     $email = $conn->real_escape_string($_POST['email']);
-    $name=$_POST['full_name'];
-    // Check if email already exists
-    $check = $conn->query("SELECT * FROM users WHERE email = '$email'");
-    if ($check->num_rows > 0) {
-        echo "<script>alert('Email already registered. Please login.');</script>";
+    $name = $_POST['full_name'];
+
+    // Server-side validation for name (no digits allowed)
+    if (preg_match('/\d/', $name)) {
+        echo "<script>alert('Name cannot contain digits.');</script>";
     } else {
-        $_SESSION['otp'] = rand(100000, 999999);
-        $_SESSION['email'] = $email;
-        $subject = "Your OTP for Smart Step";
-        $message = "Hii $name Your OTP is: " . $_SESSION['otp'] . ". Please enter this OTP to verify your email.";
-        $headers = "From: prince1p100@gmail.com";
-        
-        if (mail($email, $subject, $message, $headers)) {
-            echo "<script>alert('OTP sent to your email.');</script>";
+        // Check if email already exists
+        $check = $conn->query("SELECT * FROM users WHERE email = '$email'");
+        if ($check->num_rows > 0) {
+            echo "<script>alert('Email already registered. Please login.');</script>";
         } else {
-            echo "<script>alert('Failed to send OTP.');</script>";
+            $_SESSION['otp'] = rand(100000, 999999);
+            $_SESSION['email'] = $email;
+            $subject = "Your OTP for Smart Step";
+            $message = "Hii $name Your OTP is: " . $_SESSION['otp'] . ". Please enter this OTP to verify your email.";
+            $headers = "From: prince1p100@gmail.com";
+
+            if (mail($email, $subject, $message, $headers)) {
+                echo "<script>alert('OTP sent to your email.');</script>";
+            } else {
+                echo "<script>alert('Failed to send OTP.');</script>";
+            }
         }
     }
 }
@@ -38,11 +44,14 @@ if (isset($_POST['signup'])) {
     $role = $conn->real_escape_string($_POST['role']);
     $otp = $conn->real_escape_string($_POST['otp']);
 
-    if ($_SESSION['otp'] == $otp && $_SESSION['email'] == $email) {
+    // Server-side validation for name (no digits allowed)
+    if (preg_match('/\d/', $name)) {
+        echo "<script>alert('Name cannot contain digits.');</script>";
+    } elseif ($_SESSION['otp'] == $otp && $_SESSION['email'] == $email) {
         $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, role, status) VALUES (?, ?, ?, ?, 'Pending')");
         $stmt->bind_param("ssss", $name, $email, $password, $role);
         $stmt->execute();
-        
+
         echo "<script>alert('Registration successful! Please verify your email.'); window.location='login.php';</script>";
         unset($_SESSION['otp'], $_SESSION['email']);
     } else {
@@ -77,18 +86,32 @@ nav ul li a:hover {
 }
 
     </style>
-</head>
+    <script>
+        function validateForm() {
+            const nameField = document.querySelector('input[name="full_name"]');
+            const name = nameField.value;
+
+            // Check if the name contains digits
+            if (/\d/.test(name)) {
+                alert("Name cannot contain digits.");
+                nameField.focus();
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white p-6 rounded-lg shadow-md w-96">
         <h2 class="text-2xl font-bold text-center">Sign Up</h2>
-        <form method="POST">
+        <form method="POST" onsubmit="return validateForm();">
             <input type="text" name="full_name" placeholder="Full Name" required class="border p-2 w-full mt-3">
             <input type="email" name="email" placeholder="Email Address" required class="border p-2 w-full mt-3">
             <button type="submit" name="send_otp" class="bg-blue-500 text-white w-full p-2 rounded mt-4">Send OTP</button>
         </form>
 
-        <form method="POST">
+        <form method="POST" onsubmit="return validateForm();">
             <input type="text" name="full_name" placeholder="Full Name" required class="border p-2 w-full mt-3">
             <input type="email" name="email" placeholder="Email Address" required class="border p-2 w-full mt-3">
             <input type="text" name="otp" placeholder="Enter OTP" required class="border p-2 w-full mt-3">
