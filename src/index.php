@@ -15,45 +15,39 @@ $products = $conn->query("SELECT * FROM products LIMIT 8");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> -->
     
     <style>
         * {
-            font-family: 'Poppins', sans-serif !important;
+            font-family: 'Poppins', sans-serif;
         }
-        header .container ul li a {
-            padding: 4px 8px;         
-            border-radius: 4px;       
-            transition: background-color 0.3s, color 0.3s; 
-        }
-
-header .container ul li a:hover {
-    text-decoration: none;
-    color: blue;
-    background-color: #ffffff;
-}
-
     </style>
-    
 </head>
-<body class="bg-slate-100 text-gray-800">
+<body class="bg-slate-100 text-gray-800 font-sans">
 
 <!-- Navbar -->
 <header class="bg-blue-700 p-4 text-white shadow">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">Smart Step</h1>
-        <ul class="flex items-center">
-            <li><a href="index.php" class="hover:underline mr-8">Home</a></li> <!-- Added mr-8 for spacing -->
-            <li><a href="products.php" class="hover:underline mr-8">Shop</a></li> <!-- Added mr-8 for spacing -->
-            <li><a href="cart.php" class="hover:underline mr-8">Cart</a></li> <!-- Added mr-8 for spacing -->
+        <ul class="flex items-center space-x-4">
+            <li><a href="index.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">Home</a></li>
+            <li>
+                <a href="products.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">Shop</a>
+            </li>
+            <li>
+                <a href="cart.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">Cart</a>
+            </li>
+
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Customer'): ?>
-                <li><a href="my_orders.php" class="hover:underline mr-8">My Orders</a></li> <!-- Added mr-8 for spacing -->
+                <li>
+                    <a href="my_orders.php" class="hover:bg-white hover:text-blue-600 px-2 py-1 rounded">My Orders</a>
+                </li>
             <?php endif; ?>
+
             <li>
                 <?php
-                echo isset($_SESSION["user_id"])
-                    ? "<a href='logout.php' class='hover:underline'>Logout</a>"
-                    : "<a href='login.php' class='hover:underline'>Login</a>";
+                    echo isset($_SESSION["user_id"])
+                        ? "<a href='logout.php' class='hover:bg-white hover:text-blue-600 px-2 py-1 rounded'>Logout</a>"
+                        : "<a href='login.php' class='hover:bg-white hover:text-blue-600 px-2 py-1 rounded'>Login</a>";
                 ?>
             </li>
         </ul>

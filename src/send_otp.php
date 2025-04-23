@@ -25,7 +25,7 @@ if (isset($_POST['send_otp'])) {
 
         $subject = "Your OTP for Smart Step";
         $message = "Hi $name,\n\nYour OTP is: " . $_SESSION['otp'] . "\n\nPlease enter this OTP to verify your email.\n\nThanks,\nSmart Step Team";
-        $headers = "From: Smart Step <prince1p100@gmail.com>";
+        $headers = "From: Smart Step <subhashree.s237@gmail.com>";
 
         if (mail($email, $subject, $message, $headers)) {
             echo "<script>alert('OTP sent to your email.'); window.location.href='verify_otp.php';</script>";

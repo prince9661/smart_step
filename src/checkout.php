@@ -13,7 +13,7 @@ if ($cart_items->num_rows > 0) {
     while ($item = $cart_items->fetch_assoc()) {
         $product_id = $item['product_id'];
         $quantity = $item['quantity'];
-        // $size = $item['size']; // Make sure your cart table includes this column
+        // $size = $item['size'];
         $total_price = $item['discount_price'] * $quantity;
         $created_at = date("Y-m-d H:i:s");
         $status = "Pending";

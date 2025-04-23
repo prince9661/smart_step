@@ -5,7 +5,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle quantity updates
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quantities'])) {
     foreach ($_POST['quantities'] as $id => $qty) {
         $id = intval($id);
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quantities'])) {
     exit();
 }
 
-// Get products
+
 $result = $conn->query("SELECT * FROM products");
 ?>
 
