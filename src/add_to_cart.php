@@ -26,7 +26,6 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
     $quantity = (int)$_POST['quantity'];
     $user_id = $_SESSION['user_id'];
 
-    // Get product details
     $sql = "SELECT * FROM products WHERE id = $product_id";
     $result = $conn->query($sql);
 
@@ -36,24 +35,23 @@ if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
         if ($quantity > $product['quantity']) {
             $message = "Only {$product['quantity']} item(s) left in stock.";
         } else {
-            // Check if item already in cart
             $checkCartSql = "SELECT * FROM cart WHERE product_id = $product_id AND user_id = $user_id";
             $cartResult = $conn->query($checkCartSql);
 
             if ($cartResult->num_rows > 0) {
-                // Update quantity
                 $updateSql = "UPDATE cart SET quantity = quantity + $quantity WHERE product_id = $product_id AND user_id = $user_id";
                 $conn->query($updateSql);
             } else {
-                // Insert new item to cart
-                $name = $conn->real_escape_string($product['name']);
-                $description = $conn->real_escape_string($product['description']);
-                $price = $product['price'];
-                $discount_price = $product['discount_price'];
-                $image = $conn->real_escape_string($product['image']);
-
-                $insertSql = "INSERT INTO cart (product_id, name, description, price, discount_price, quantity, image, user_id) 
-                              VALUES ($product_id, '$name', '$description', $price, $discount_price, $quantity, '$image', $user_id)";
+                $insertSql = "INSERT INTO cart (product_id, name, description, price, discount_price, quantity, image, user_id) VALUES (
+                    {$product['id']}, 
+                    '{$product['name']}', 
+                    '{$product['description']}', 
+                    {$product['price']}, 
+                    {$product['discount_price']}, 
+                    $quantity, 
+                    '{$product['image']}', 
+                    $user_id
+                )";
                 $conn->query($insertSql);
             }
 

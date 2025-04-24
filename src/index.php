@@ -134,7 +134,7 @@ $products = $conn->query("SELECT * FROM products LIMIT 8");
 <!-- Footer -->
 <footer class="bg-gray-900 text-white mt-10">
     <div class="container mx-auto py-6 px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-        <p>&copy; <?= date("Y") ?> Smart Step. All rights reserved.</p>
+        <p>&copy; 2025 Smart Step. All rights reserved.</p>
         <div class="flex gap-4 mt-4 md:mt-0">
             <a href="#" class="hover:text-blue-400">Facebook</a>
             <a href="#" class="hover:text-blue-400">Instagram</a>
