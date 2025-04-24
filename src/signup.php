@@ -24,7 +24,7 @@ if (isset($_POST['send_otp'])) {
             $_SESSION['otp'] = rand(100000, 999999);
             $_SESSION['email'] = $email;
             $subject = "Your OTP for Smart Step";
-            $message = "Hii $name Your OTP is: " . $_SESSION['otp'] . ". Please enter this OTP to verify your email.";
+            $message = "Hii $name, Your OTP is: " . $_SESSION['otp'] . ". Please enter this OTP to verify your email.";
             $headers = "From: prince1p100@gmail.com";
 
             if (mail($email, $subject, $message, $headers)) {
@@ -40,16 +40,30 @@ if (isset($_POST['send_otp'])) {
 if (isset($_POST['signup'])) {
     $name = $conn->real_escape_string($_POST['full_name']);
     $email = $conn->real_escape_string($_POST['email']);
-    $password = password_hash($conn->real_escape_string($_POST['password']), PASSWORD_BCRYPT);
+    $password = $_POST['password'];
     $role = $conn->real_escape_string($_POST['role']);
     $otp = $conn->real_escape_string($_POST['otp']);
 
-    // Server-side validation for name (no digits allowed)
+    // Validate name (no digits allowed)
     if (preg_match('/\d/', $name)) {
         echo "<script>alert('Name cannot contain digits.');</script>";
-    } elseif ($_SESSION['otp'] == $otp && $_SESSION['email'] == $email) {
+    }
+    // Validate email format
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Please enter a valid email address.');</script>";
+    }
+    // Validate password strength
+    elseif (!preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/", $password)) {
+        echo "<script>alert('Password must contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.');</script>";
+    }
+    // Validate if OTP matches and email matches
+    elseif ($_SESSION['otp'] == $otp && $_SESSION['email'] == $email) {
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Insert the new user into the database
         $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, role, status) VALUES (?, ?, ?, ?, 'Pending')");
-        $stmt->bind_param("ssss", $name, $email, $password, $role);
+        $stmt->bind_param("ssss", $name, $email, $hashedPassword, $role);
         $stmt->execute();
 
         echo "<script>alert('Registration successful! Please verify your email.'); window.location='login.php';</script>";
@@ -59,6 +73,7 @@ if (isset($_POST['signup'])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
